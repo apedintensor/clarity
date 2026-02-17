@@ -10,14 +10,16 @@
     "dev": "echo 'CLI ready — use: tsx src/index.ts <command>'"
   },
   "dependencies": {
-    "commander": "^13.0.0",
-    "chalk": "^5.4.0",
-    "dotenv": "^17.3.0",
-    "@trpc/client": "^11.0.0",
-    "@trpc/server": "^11.0.0",
+    "@ai-sdk/google": "^1.1.0",
     "@clarity/core": "workspace:*",
     "@clarity/db": "workspace:*",
-    "@clarity/types": "workspace:*"
+    "@clarity/types": "workspace:*",
+    "@trpc/client": "^11.0.0",
+    "@trpc/server": "^11.0.0",
+    "ai": "^4.1.0",
+    "chalk": "^5.4.0",
+    "commander": "^13.0.0",
+    "dotenv": "^17.3.0"
   },
   "devDependencies": {
     "tsx": "^4.19.0"

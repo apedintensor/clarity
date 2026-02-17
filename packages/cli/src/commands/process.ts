@@ -2,6 +2,7 @@ import { Command } from "commander";
 import { createCallerFactory, createContext, appRouter } from "@clarity/core";
 import { formatJson, printSuccess, printError, printInfo } from "../utils/output";
 import { createPrompt, ask } from "../utils/prompts";
+import { resolveId } from "../utils/resolve-id";
 
 const createCaller = createCallerFactory(appRouter);
 
@@ -11,11 +12,17 @@ export function registerProcessCommand(program: Command): void {
     .description("Process a brain dump with AI")
     .option("--json", "Output as JSON")
     .action(async (id: string, opts: { json?: boolean }) => {
+      if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+        printError("AI service is not configured. Set GOOGLE_GENERATIVE_AI_API_KEY in your .env file.");
+        process.exit(1);
+      }
+
       const caller = createCaller(createContext());
 
       try {
+        const resolvedId = await resolveId(id, undefined);
         printInfo("Processing brain dump with AI...");
-        const result = await caller.braindump.process({ id });
+        const result = await caller.braindump.process({ id: resolvedId });
 
         if (opts.json) {
           console.log(formatJson(result));
@@ -25,7 +32,7 @@ export function registerProcessCommand(program: Command): void {
         printSuccess("Brain dump processed!");
 
         // Get updated dump with clarifications
-        const dump = await caller.braindump.get({ id });
+        const dump = await caller.braindump.get({ id: resolvedId });
 
         if (dump.themes && dump.themes.length > 0) {
           console.log("\n  Themes:", dump.themes.join(", "));

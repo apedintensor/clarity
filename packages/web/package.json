@@ -11,9 +11,16 @@
   "dependencies": {
     "@ai-sdk/google": "^1.1.0",
     "@ai-sdk/react": "^1.1.0",
+    "@atlaskit/pragmatic-drag-and-drop": "^1.7.7",
+    "@atlaskit/pragmatic-drag-and-drop-hitbox": "^1.1.0",
     "@clarity/core": "workspace:*",
     "@clarity/db": "workspace:*",
     "@clarity/types": "workspace:*",
+    "@fullcalendar/core": "^6.1.20",
+    "@fullcalendar/daygrid": "^6.1.20",
+    "@fullcalendar/interaction": "^6.1.20",
+    "@fullcalendar/react": "^6.1.20",
+    "@fullcalendar/timegrid": "^6.1.20",
     "@tanstack/react-query": "^5.62.0",
     "@trpc/client": "^11.0.0",
     "@trpc/react-query": "^11.0.0",
@@ -21,7 +28,9 @@
     "ai": "^4.1.0",
     "next": "^15.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "sonner": "^2.0.7",
+    "temporal-polyfill": "^0.3.0"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.0.0",

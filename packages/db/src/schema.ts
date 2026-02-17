@@ -43,6 +43,8 @@ export const goals = sqliteTable(
     progress: integer("progress").notNull().default(0),
     sortOrder: integer("sort_order").notNull().default(0),
     completedAt: text("completed_at"),
+    colorIndex: integer("color_index").notNull().default(0),
+    deletedAt: text("deleted_at"),
     createdAt: text("created_at").notNull(),
     updatedAt: text("updated_at").notNull(),
   },
@@ -64,7 +66,12 @@ export const tasks = sqliteTable(
     status: text("status", { enum: ["pending", "in_progress", "completed", "skipped"] }).notNull().default("pending"),
     sortOrder: integer("sort_order").notNull(),
     dependsOn: text("depends_on", { mode: "json" }).$type<string[]>(),
+    parentTaskId: text("parent_task_id"),
     completedAt: text("completed_at"),
+    scheduledDate: text("scheduled_date"),
+    scheduledStart: text("scheduled_start"),
+    scheduledDuration: integer("scheduled_duration").default(30),
+    deletedAt: text("deleted_at"),
     createdAt: text("created_at").notNull(),
     updatedAt: text("updated_at").notNull(),
   },
@@ -106,5 +113,73 @@ export const progressRecords = sqliteTable(
   },
   (table) => [
     uniqueIndex("idx_progress_user_date").on(table.userId, table.date),
+  ],
+);
+
+export const inboxItems = sqliteTable(
+  "inbox_items",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id),
+    title: text("title").notNull(),
+    description: text("description"),
+    status: text("status", { enum: ["unprocessed", "assigned", "deleted"] }).notNull().default("unprocessed"),
+    assignedGoalId: text("assigned_goal_id").references(() => goals.id),
+    assignedTaskId: text("assigned_task_id").references(() => tasks.id),
+    sortOrder: integer("sort_order").notNull().default(0),
+    deletedAt: text("deleted_at"),
+    createdAt: text("created_at").notNull(),
+    updatedAt: text("updated_at").notNull(),
+  },
+  (table) => [
+    index("idx_inbox_user_status").on(table.userId, table.status),
+    index("idx_inbox_created").on(table.createdAt),
+  ],
+);
+
+export const conversations = sqliteTable(
+  "conversations",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id),
+    inboxItemId: text("inbox_item_id").notNull().references(() => inboxItems.id),
+    createdAt: text("created_at").notNull(),
+    updatedAt: text("updated_at").notNull(),
+  },
+  (table) => [
+    uniqueIndex("idx_conversation_inbox_item").on(table.inboxItemId),
+  ],
+);
+
+export const conversationMessages = sqliteTable(
+  "conversation_messages",
+  {
+    id: text("id").primaryKey(),
+    conversationId: text("conversation_id").notNull().references(() => conversations.id),
+    role: text("role", { enum: ["user", "assistant", "system"] }).notNull(),
+    content: text("content").notNull(),
+    createdAt: text("created_at").notNull(),
+  },
+  (table) => [
+    index("idx_conv_msg_conversation").on(table.conversationId),
+  ],
+);
+
+export const dailyPlans = sqliteTable(
+  "daily_plans",
+  {
+    id: text("id").primaryKey(),
+    userId: text("user_id").notNull().references(() => users.id),
+    date: text("date").notNull(),
+    selectedTaskIds: text("selected_task_ids", { mode: "json" }).notNull().$type<string[]>().default([]),
+    totalEstimatedMinutes: integer("total_estimated_minutes").notNull().default(0),
+    focusThresholdMinutes: integer("focus_threshold_minutes").notNull().default(360),
+    isOvercommitted: integer("is_overcommitted").notNull().default(0),
+    status: text("status", { enum: ["in_progress", "confirmed", "skipped"] }).notNull().default("in_progress"),
+    createdAt: text("created_at").notNull(),
+    updatedAt: text("updated_at").notNull(),
+  },
+  (table) => [
+    uniqueIndex("idx_daily_plan_user_date").on(table.userId, table.date),
   ],
 );

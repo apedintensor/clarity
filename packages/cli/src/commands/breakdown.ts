@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { createCallerFactory, createContext, appRouter } from "@clarity/core";
 import { formatJson, printSuccess, printError, printInfo } from "../utils/output";
+import { resolveId } from "../utils/resolve-id";
 
 const createCaller = createCallerFactory(appRouter);
 
@@ -10,11 +11,17 @@ export function registerBreakdownCommands(program: Command): void {
     .description("Break down a goal into actionable tasks using AI")
     .option("--json", "Output as JSON")
     .action(async (goalId: string, opts: { json?: boolean }) => {
+      if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+        printError("AI service is not configured. Set GOOGLE_GENERATIVE_AI_API_KEY in your .env file.");
+        process.exit(1);
+      }
+
       const caller = createCaller(createContext());
 
       try {
+        const resolvedGoalId = await resolveId(goalId, "goal");
         printInfo("Breaking down goal with AI...");
-        const result = await caller.goal.breakdown({ id: goalId });
+        const result = await caller.goal.breakdown({ id: resolvedGoalId });
 
         if (opts.json) {
           console.log(formatJson(result));
@@ -24,7 +31,7 @@ export function registerBreakdownCommands(program: Command): void {
         printSuccess("Goal broken down into tasks!");
 
         // Fetch the updated goal with tasks
-        const goal = await caller.goal.get({ id: goalId });
+        const goal = await caller.goal.get({ id: resolvedGoalId });
 
         console.log(`\n  ${goal.title}`);
         console.log(`  ${goal.tasks.length} tasks generated:\n`);
@@ -47,7 +54,8 @@ export function registerBreakdownCommands(program: Command): void {
     .option("--json", "Output as JSON")
     .action(async (goalId: string, opts: { json?: boolean }) => {
       const caller = createCaller(createContext());
-      const result = await caller.task.list({ goalId });
+      const resolvedGoalId = await resolveId(goalId, "goal");
+      const result = await caller.task.list({ goalId: resolvedGoalId });
 
       if (opts.json) {
         console.log(formatJson(result));

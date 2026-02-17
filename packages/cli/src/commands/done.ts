@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { createCallerFactory, createContext, appRouter } from "@clarity/core";
 import { formatJson, printSuccess, printError, printReinforcement } from "../utils/output";
+import { resolveId } from "../utils/resolve-id";
 
 const createCaller = createCallerFactory(appRouter);
 
@@ -13,7 +14,8 @@ export function registerDoneCommand(program: Command): void {
       const caller = createCaller(createContext());
 
       try {
-        const result = await caller.task.complete({ id: taskId });
+        const resolvedTaskId = await resolveId(taskId, "task");
+        const result = await caller.task.complete({ id: resolvedTaskId });
 
         if (opts.json) {
           console.log(formatJson(result));

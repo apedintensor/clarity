@@ -10,7 +10,12 @@ export interface Task {
   status: TaskStatus;
   sortOrder: number;
   dependsOn: string[] | null;
+  parentTaskId: string | null;
   completedAt: string | null;
+  scheduledDate: string | null;
+  scheduledStart: string | null;
+  scheduledDuration: number | null;
+  deletedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }

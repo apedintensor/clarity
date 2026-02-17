@@ -30,6 +30,9 @@ importers:
 
   packages/cli:
     dependencies:
+      '@ai-sdk/google':
+        specifier: ^1.1.0
+        version: 1.2.22(zod@3.25.76)
       '@clarity/core':
         specifier: workspace:*
         version: link:../core
@@ -45,6 +48,9 @@ importers:
       '@trpc/server':
         specifier: ^11.0.0
         version: 11.10.0(typescript@5.9.3)
+      ai:
+        specifier: ^4.1.0
+        version: 4.3.19(react@19.2.4)(zod@3.25.76)
       chalk:
         specifier: ^5.4.0
         version: 5.6.2
@@ -122,6 +128,12 @@ importers:
       '@ai-sdk/react':
         specifier: ^1.1.0
         version: 1.2.12(react@19.2.4)(zod@3.25.76)
+      '@atlaskit/pragmatic-drag-and-drop':
+        specifier: ^1.7.7
+        version: 1.7.7
+      '@atlaskit/pragmatic-drag-and-drop-hitbox':
+        specifier: ^1.1.0
+        version: 1.1.0
       '@clarity/core':
         specifier: workspace:*
         version: link:../core
@@ -131,6 +143,21 @@ importers:
       '@clarity/types':
         specifier: workspace:*
         version: link:../types
+      '@fullcalendar/core':
+        specifier: ^6.1.20
+        version: 6.1.20
+      '@fullcalendar/daygrid':
+        specifier: ^6.1.20
+        version: 6.1.20(@fullcalendar/core@6.1.20)
+      '@fullcalendar/interaction':
+        specifier: ^6.1.20
+        version: 6.1.20(@fullcalendar/core@6.1.20)
+      '@fullcalendar/react':
+        specifier: ^6.1.20
+        version: 6.1.20(@fullcalendar/core@6.1.20)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      '@fullcalendar/timegrid':
+        specifier: ^6.1.20
+        version: 6.1.20(@fullcalendar/core@6.1.20)
       '@tanstack/react-query':
         specifier: ^5.62.0
         version: 5.90.21(react@19.2.4)
@@ -155,6 +182,12 @@ importers:
       react-dom:
         specifier: ^19.0.0
         version: 19.2.4(react@19.2.4)
+      sonner:
+        specifier: ^2.0.7
+        version: 2.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
+      temporal-polyfill:
+        specifier: ^0.3.0
+        version: 0.3.0
     devDependencies:
       '@tailwindcss/postcss':
         specifier: ^4.0.0
@@ -219,6 +252,12 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
+  '@atlaskit/pragmatic-drag-and-drop-hitbox@1.1.0':
+    resolution: {integrity: sha512-JWt6eVp6Br2FPHRM8s0dUIHQk/jFInGP1f3ti5CdtM1Ji5/pt8Akm44wDC063Gv2i5RGseixtbW0z/t6RYtbdg==}
+
+  '@atlaskit/pragmatic-drag-and-drop@1.7.7':
+    resolution: {integrity: sha512-jX+68AoSTqO/fhCyJDTZ38Ey6/wyL2Iq+J/moanma0YyktpnoHxevjY1UNJHYp0NCburdQDZSL1ZFac1mO1osQ==}
+
   '@babel/code-frame@7.29.0':
     resolution: {integrity: sha512-9NhCeYjq9+3uxgdtp20LSiJXJvN0FeCtNGpJxuMFZ1Kv3cWUNb6DOhJwUvcVCzKGR66cw4njwM6hrJLqgOwbcw==}
     engines: {node: '>=6.9.0'}
@@ -273,6 +312,10 @@ packages:
     resolution: {integrity: sha512-IyDgFV5GeDUVX4YdF/3CPULtVGSXXMLh1xVIgdCgxApktqnQV0r7/8Nqthg+8YLGaAtdyIlo2qIdZrbCv4+7ww==}
     engines: {node: '>=6.0.0'}
     hasBin: true
+
+  '@babel/runtime@7.28.6':
+    resolution: {integrity: sha512-05WQkdpL9COIMz4LjTxGpPNCdlpyimKppYNoJ5Di5EUObifl8t4tuLuUBBZEpoLYOmfvIWrsp9fCl0HoPRVTdA==}
+    engines: {node: '>=6.9.0'}
 
   '@babel/template@7.28.6':
     resolution: {integrity: sha512-YA6Ma2KsCdGb+WC6UpBVFJGXL58MDA6oyONbjyF/+5sBgxY/dwkhLogbMT2GXXyU84/IhRw/2D1Os1B/giz+BQ==}
@@ -769,6 +812,31 @@ packages:
   '@eslint/plugin-kit@0.4.1':
     resolution: {integrity: sha512-43/qtrDUokr7LJqoF2c3+RInu/t4zfrpYdoSDfYyhg52rwLV6TnOvdG4fXm7IkSB3wErkcmJS9iEhjVtOSEjjA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  '@fullcalendar/core@6.1.20':
+    resolution: {integrity: sha512-1cukXLlePFiJ8YKXn/4tMKsy0etxYLCkXk8nUCFi11nRONF2Ba2CD5b21/ovtOO2tL6afTJfwmc1ed3HG7eB1g==}
+
+  '@fullcalendar/daygrid@6.1.20':
+    resolution: {integrity: sha512-AO9vqhkLP77EesmJzuU+IGXgxNulsA8mgQHynclJ8U70vSwAVnbcLG9qftiTAFSlZjiY/NvhE7sflve6cJelyQ==}
+    peerDependencies:
+      '@fullcalendar/core': ~6.1.20
+
+  '@fullcalendar/interaction@6.1.20':
+    resolution: {integrity: sha512-p6txmc5txL0bMiPaJxe2ip6o0T384TyoD2KGdsU6UjZ5yoBlaY+dg7kxfnYKpYMzEJLG58n+URrHr2PgNL2fyA==}
+    peerDependencies:
+      '@fullcalendar/core': ~6.1.20
+
+  '@fullcalendar/react@6.1.20':
+    resolution: {integrity: sha512-1w0pZtceaUdfAnxMSCGHCQalhi+mR1jOe76sXzyAXpcPz/Lf0zHSdcGK/U2XpZlnQgQtBZW+d+QBnnzVQKCxAA==}
+    peerDependencies:
+      '@fullcalendar/core': ~6.1.20
+      react: ^16.7.0 || ^17 || ^18 || ^19
+      react-dom: ^16.7.0 || ^17 || ^18 || ^19
+
+  '@fullcalendar/timegrid@6.1.20':
+    resolution: {integrity: sha512-4H+/MWbz3ntA50lrPif+7TsvMeX3R1GSYjiLULz0+zEJ7/Yfd9pupZmAwUs/PBpA6aAcFmeRr0laWfcz1a9V1A==}
+    peerDependencies:
+      '@fullcalendar/core': ~6.1.20
 
   '@humanfs/core@0.19.1':
     resolution: {integrity: sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA==}
@@ -1429,6 +1497,9 @@ packages:
 
   better-sqlite3@11.10.0:
     resolution: {integrity: sha512-EwhOpyXiOEL/lKzHz9AW1msWFNzGc/z+LzeB3/jnFJpxu+th2yqvzsSWas1v9jgs9+xiXJcD5A8CJxAG2TaghQ==}
+
+  bind-event-listener@3.0.0:
+    resolution: {integrity: sha512-PJvH288AWQhKs2v9zyfYdPzlPqf5bXbGMmhmUIY9x4dAUGIWgomO771oBQNwJnMQSnUIXhKu6sgzpBRXTlvb8Q==}
 
   bindings@1.5.0:
     resolution: {integrity: sha512-p2q/t/mhvuOj/UeLlV6566GD/guowlr0hHxClI0W9m7MWYkL1F0hLo+0Aexs9HSPCtR1SXQ0TD3MMKrXZajbiQ==}
@@ -2514,6 +2585,9 @@ packages:
     resolution: {integrity: sha512-3Ybi1tAuwAP9s0r1UQ2J4n5Y0G05bJkpUIO0/bI9MhwmD70S5aTWbXGBwxHrelT+XM1k6dM0pk+SwNkpTRN7Pg==}
     engines: {node: ^10 || ^12 || >=14}
 
+  preact@10.12.1:
+    resolution: {integrity: sha512-l8386ixSsBdbreOAkqtrwqHwdvR35ID8c3rKPa8lCWuO86dBi32QWHV4vfsZK1utLLFMvw+Z5Ad4XLkZzchscg==}
+
   prebuild-install@7.1.3:
     resolution: {integrity: sha512-8Mf2cbV7x1cXPUILADGI3wuhfqWvtiLA1iclTDbFRZkgRQS0NqsPZphna9V+HyTEadheuPmjaJMsbzKQFOzLug==}
     engines: {node: '>=10'}
@@ -2540,6 +2614,9 @@ packages:
 
   queue-microtask@1.2.3:
     resolution: {integrity: sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==}
+
+  raf-schd@4.0.3:
+    resolution: {integrity: sha512-tQkJl2GRWh83ui2DiPTJz9wEiMN20syf+5oKfB03yYP7ioZcJwsIK8FjrtLwH1m7C7e+Tt2yYBlrOpdT+dyeIQ==}
 
   rc@1.2.8:
     resolution: {integrity: sha512-y3bGgqKj3QBdxLbLkomlohkvsA8gdAiUQlSBJnBhfn+BPxg4bc62d8TcBW15wavDfgexCgccckhcZvywyQYPOw==}
@@ -2672,6 +2749,12 @@ packages:
   simple-get@4.0.1:
     resolution: {integrity: sha512-brv7p5WgH0jmQJr1ZDDfKDOSeWWg+OVypG99A/5vYGPqJ6pxiaHLy8nxtFjBA7oMa01ebA9gfh1uMCFqOuXxvA==}
 
+  sonner@2.0.7:
+    resolution: {integrity: sha512-W6ZN4p58k8aDKA4XPcx2hpIQXBRAgyiWVkYhT7CvK6D3iAu7xjvVyhQHg2/iaKJZ1XVJ4r7XuwGL+WGEK37i9w==}
+    peerDependencies:
+      react: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+      react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-rc
+
   source-map-js@1.2.1:
     resolution: {integrity: sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA==}
     engines: {node: '>=0.10.0'}
@@ -2767,6 +2850,12 @@ packages:
   tar-stream@2.2.0:
     resolution: {integrity: sha512-ujeqbceABgwMZxEJnk2HDY2DlnUZ+9oEcb1KzTVfYHio0UE6dG71n60d8D2I4qNvleWrrXpmjpt7vZeF1LnMZQ==}
     engines: {node: '>=6'}
+
+  temporal-polyfill@0.3.0:
+    resolution: {integrity: sha512-qNsTkX9K8hi+FHDfHmf22e/OGuXmfBm9RqNismxBrnSmZVJKegQ+HYYXT+R7Ha8F/YSm2Y34vmzD4cxMu2u95g==}
+
+  temporal-spec@0.3.0:
+    resolution: {integrity: sha512-n+noVpIqz4hYgFSMOSiINNOUOMFtV5cZQNCmmszA6GiVFVRt3G7AqVyhXjhCSmowvQn+NsGn+jMDMKJYHd3bSQ==}
 
   throttleit@2.1.0:
     resolution: {integrity: sha512-nt6AMGKW1p/70DF/hGBdJB57B8Tspmbp5gfJ8ilhLnt7kkr2ye7hzD6NVG8GGErk2HWF34igrL2CXmNIkzKqKw==}
@@ -2989,6 +3078,17 @@ snapshots:
 
   '@alloc/quick-lru@5.2.0': {}
 
+  '@atlaskit/pragmatic-drag-and-drop-hitbox@1.1.0':
+    dependencies:
+      '@atlaskit/pragmatic-drag-and-drop': 1.7.7
+      '@babel/runtime': 7.28.6
+
+  '@atlaskit/pragmatic-drag-and-drop@1.7.7':
+    dependencies:
+      '@babel/runtime': 7.28.6
+      bind-event-listener: 3.0.0
+      raf-schd: 4.0.3
+
   '@babel/code-frame@7.29.0':
     dependencies:
       '@babel/helper-validator-identifier': 7.28.5
@@ -3065,6 +3165,8 @@ snapshots:
   '@babel/parser@7.29.0':
     dependencies:
       '@babel/types': 7.29.0
+
+  '@babel/runtime@7.28.6': {}
 
   '@babel/template@7.28.6':
     dependencies:
@@ -3375,6 +3477,29 @@ snapshots:
     dependencies:
       '@eslint/core': 0.17.0
       levn: 0.4.1
+
+  '@fullcalendar/core@6.1.20':
+    dependencies:
+      preact: 10.12.1
+
+  '@fullcalendar/daygrid@6.1.20(@fullcalendar/core@6.1.20)':
+    dependencies:
+      '@fullcalendar/core': 6.1.20
+
+  '@fullcalendar/interaction@6.1.20(@fullcalendar/core@6.1.20)':
+    dependencies:
+      '@fullcalendar/core': 6.1.20
+
+  '@fullcalendar/react@6.1.20(@fullcalendar/core@6.1.20)(react-dom@19.2.4(react@19.2.4))(react@19.2.4)':
+    dependencies:
+      '@fullcalendar/core': 6.1.20
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+
+  '@fullcalendar/timegrid@6.1.20(@fullcalendar/core@6.1.20)':
+    dependencies:
+      '@fullcalendar/core': 6.1.20
+      '@fullcalendar/daygrid': 6.1.20(@fullcalendar/core@6.1.20)
 
   '@humanfs/core@0.19.1': {}
 
@@ -3964,6 +4089,8 @@ snapshots:
     dependencies:
       bindings: 1.5.0
       prebuild-install: 7.1.3
+
+  bind-event-listener@3.0.0: {}
 
   bindings@1.5.0:
     dependencies:
@@ -5154,6 +5281,8 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
+  preact@10.12.1: {}
+
   prebuild-install@7.1.3:
     dependencies:
       detect-libc: 2.1.2
@@ -5187,6 +5316,8 @@ snapshots:
   punycode@2.3.1: {}
 
   queue-microtask@1.2.3: {}
+
+  raf-schd@4.0.3: {}
 
   rc@1.2.8:
     dependencies:
@@ -5379,6 +5510,11 @@ snapshots:
       once: 1.4.0
       simple-concat: 1.0.1
 
+  sonner@2.0.7(react-dom@19.2.4(react@19.2.4))(react@19.2.4):
+    dependencies:
+      react: 19.2.4
+      react-dom: 19.2.4(react@19.2.4)
+
   source-map-js@1.2.1: {}
 
   source-map-support@0.5.21:
@@ -5492,6 +5628,12 @@ snapshots:
       fs-constants: 1.0.0
       inherits: 2.0.4
       readable-stream: 3.6.2
+
+  temporal-polyfill@0.3.0:
+    dependencies:
+      temporal-spec: 0.3.0
+
+  temporal-spec@0.3.0: {}
 
   throttleit@2.1.0: {}
 

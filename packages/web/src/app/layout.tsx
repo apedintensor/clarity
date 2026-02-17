@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Providers } from "@/lib/providers";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { Toaster } from "sonner";
 import "@/styles/globals.css";
 
 export const metadata: Metadata = {
@@ -24,11 +25,17 @@ export default function RootLayout({
                 Clarity
               </Link>
               <div className="flex items-center gap-4 text-sm">
-                <Link href="/dump" className="text-[var(--muted)] hover:text-[var(--fg)]">
-                  Brain Dump
-                </Link>
                 <Link href="/" className="text-[var(--muted)] hover:text-[var(--fg)]">
                   Dashboard
+                </Link>
+                <Link href="/inbox" className="text-[var(--muted)] hover:text-[var(--fg)]">
+                  Inbox
+                </Link>
+                <Link href="/calendar" className="text-[var(--muted)] hover:text-[var(--fg)]">
+                  Calendar
+                </Link>
+                <Link href="/plan" className="text-[var(--muted)] hover:text-[var(--fg)]">
+                  Plan
                 </Link>
                 <ThemeToggle />
               </div>
@@ -37,6 +44,7 @@ export default function RootLayout({
           <main className="mx-auto max-w-4xl px-6 py-8">
             {children}
           </main>
+          <Toaster position="bottom-right" richColors />
         </Providers>
       </body>
     </html>

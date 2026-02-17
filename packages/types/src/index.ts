@@ -47,3 +47,26 @@ export type {
   UserPreferences,
   UpdatePreferencesInput,
 } from "./user.js";
+
+export type {
+  InboxItem,
+  InboxItemStatus,
+  CreateInboxItemInput,
+  AssignInboxItemInput,
+  AssignInboxItemOutput,
+} from "./inbox.js";
+
+export type {
+  Conversation,
+  ConversationMessage,
+  ConversationMessageRole,
+} from "./conversation.js";
+
+export type {
+  DailyPlan,
+  DailyPlanStatus,
+  UnfinishedTask,
+  StartDailyPlanOutput,
+  UpdateSelectionsOutput,
+  ConfirmPlanOutput,
+} from "./daily-plan.js";

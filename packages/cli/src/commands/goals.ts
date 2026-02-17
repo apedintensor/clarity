@@ -1,6 +1,7 @@
 import { Command } from "commander";
 import { createCallerFactory, createContext, appRouter } from "@clarity/core";
 import { formatJson, printProgress } from "../utils/output";
+import { resolveId } from "../utils/resolve-id";
 import type { GoalStatus } from "@clarity/types";
 
 const createCaller = createCallerFactory(appRouter);
@@ -42,7 +43,8 @@ export function registerGoalsCommands(program: Command): void {
     .action(async (id: string, opts: { json?: boolean }) => {
       const caller = createCaller(createContext());
 
-      const goal = await caller.goal.get({ id });
+      const resolvedId = await resolveId(id, "goal");
+      const goal = await caller.goal.get({ id: resolvedId });
 
       if (opts.json) {
         console.log(formatJson(goal));
