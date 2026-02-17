@@ -2,6 +2,7 @@ import { Command } from "commander";
 import { createCallerFactory, createContext, appRouter } from "@clarity/core";
 import { printError, printInfo, printReinforcement, printProgress } from "../utils/output";
 import { createPrompt, ask } from "../utils/prompts";
+import { resolveId } from "../utils/resolve-id";
 
 const createCaller = createCallerFactory(appRouter);
 
@@ -14,12 +15,13 @@ export function registerFocusCommand(program: Command): void {
       const rl = createPrompt();
 
       try {
-        const goal = await caller.goal.get({ id: goalId });
+        const resolvedGoalId = await resolveId(goalId, "goal");
+        const goal = await caller.goal.get({ id: resolvedGoalId });
         printInfo(`Focus mode: ${goal.title}\n`);
 
         let running = true;
         while (running) {
-          const next = await caller.task.getNext({ goalId });
+          const next = await caller.task.getNext({ goalId: resolvedGoalId });
 
           if (!next.task) {
             console.log("\n  🏆 All tasks complete! Amazing work!");
@@ -38,7 +40,7 @@ export function registerFocusCommand(program: Command): void {
           const action = await ask(rl, "\n  [done/skip/quit] > ");
 
           if (action === "quit" || action === "q") {
-            printInfo("Focus mode paused. Resume anytime with: clarity focus " + goalId);
+            printInfo("Focus mode paused. Resume anytime with: clarity focus " + resolvedGoalId);
             running = false;
           } else if (action === "skip" || action === "s") {
             await caller.task.update({ id: next.task.id, status: "skipped" });

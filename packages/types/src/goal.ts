@@ -10,7 +10,9 @@ export interface Goal {
   status: GoalStatus;
   progress: number;
   sortOrder: number;
+  colorIndex: number;
   completedAt: string | null;
+  deletedAt: string | null;
   createdAt: string;
   updatedAt: string;
 }

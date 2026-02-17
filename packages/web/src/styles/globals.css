@@ -29,3 +29,52 @@ body {
   color: var(--fg);
   font-family: system-ui, -apple-system, sans-serif;
 }
+
+/* FullCalendar dark mode overrides */
+.dark .fc {
+  --fc-border-color: var(--border);
+  --fc-page-bg-color: var(--bg);
+  --fc-neutral-bg-color: rgba(55, 65, 81, 0.3);
+  --fc-today-bg-color: rgba(99, 102, 241, 0.1);
+  --fc-now-indicator-color: var(--accent);
+}
+
+.dark .fc .fc-toolbar-title,
+.dark .fc .fc-col-header-cell-cushion,
+.dark .fc .fc-timegrid-slot-label-cushion,
+.dark .fc .fc-daygrid-day-number {
+  color: var(--fg);
+}
+
+.dark .fc .fc-button {
+  background-color: var(--border);
+  border-color: var(--border);
+  color: var(--fg);
+}
+
+.dark .fc .fc-button:hover {
+  background-color: var(--accent);
+  border-color: var(--accent);
+}
+
+.dark .fc .fc-button-active {
+  background-color: var(--accent) !important;
+  border-color: var(--accent) !important;
+}
+
+.dark .fc .fc-col-header-cell {
+  background-color: rgba(55, 65, 81, 0.3);
+}
+
+.dark .fc .fc-timegrid-slot {
+  border-color: var(--border);
+}
+
+.dark .fc .fc-scrollgrid {
+  border-color: var(--border);
+}
+
+.dark .fc td,
+.dark .fc th {
+  border-color: var(--border);
+}

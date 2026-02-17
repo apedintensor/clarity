@@ -1,15 +1,58 @@
 "use client";
 
-import { trpc } from "@/lib/trpc";
-import { GoalCard } from "@/components/goal-card";
-import { StreakBadge } from "@/components/streak-badge";
+import { useState } from "react";
 import Link from "next/link";
+import { trpc } from "@/lib/trpc";
+import { toast } from "sonner";
+import { SortableGoalList } from "@/components/sortable-goal-list";
+import { GoalDetailModal } from "@/components/goal-detail-modal";
+import { StreakBadge } from "@/components/streak-badge";
+import { useCardSelection } from "@/hooks/use-card-selection";
 
 export default function DashboardPage() {
   const { data: dashboard, isLoading } = trpc.progress.dashboard.useQuery();
+  const utils = trpc.useUtils();
+  const [detailGoalId, setDetailGoalId] = useState<string | null>(null);
 
   // Ensure user exists
   trpc.user.getOrCreate.useQuery();
+
+  const softDeleteMut = trpc.goal.softDelete.useMutation({
+    onSuccess: () => handleUpdate(),
+  });
+  const undoDeleteMut = trpc.goal.undoDelete.useMutation({
+    onSuccess: () => handleUpdate(),
+  });
+  const permanentDeleteMut = trpc.goal.permanentDelete.useMutation({
+    onSuccess: () => handleUpdate(),
+  });
+
+  const { selectedId, select } = useCardSelection({
+    onDelete: (id) => {
+      softDeleteMut.mutate({ id }, {
+        onSuccess: (data) => {
+          const timeout = setTimeout(() => {
+            permanentDeleteMut.mutate({ id });
+          }, 5000);
+          toast("Goal deleted", {
+            action: {
+              label: "Undo",
+              onClick: () => {
+                clearTimeout(timeout);
+                undoDeleteMut.mutate({ id, cascadeDeletedTaskIds: data.cascadeDeletedTaskIds });
+              },
+            },
+            duration: 5000,
+          });
+        },
+      });
+    },
+  });
+
+  const handleUpdate = () => {
+    utils.progress.dashboard.invalidate();
+    utils.goal.list.invalidate();
+  };
 
   if (isLoading) {
     return <div className="text-[var(--muted)]">Loading dashboard...</div>;
@@ -22,10 +65,10 @@ export default function DashboardPage() {
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold">Dashboard</h1>
         <Link
-          href="/dump"
+          href="/inbox"
           className="rounded-lg bg-[var(--accent)] px-4 py-2 text-sm font-medium text-white hover:bg-[var(--accent-hover)]"
         >
-          New Brain Dump
+          Inbox
         </Link>
       </div>
 
@@ -52,14 +95,16 @@ export default function DashboardPage() {
         {dashboard.activeGoals.length === 0 ? (
           <div className="rounded-lg border border-dashed border-[var(--border)] p-8 text-center text-[var(--muted)]">
             <p>No active goals yet.</p>
-            <p className="mt-1 text-sm">Start by capturing a brain dump!</p>
+            <p className="mt-1 text-sm">Start by capturing a thought in the Inbox!</p>
           </div>
         ) : (
-          <div className="space-y-3">
-            {dashboard.activeGoals.map((goal) => (
-              <GoalCard key={goal.id} goal={goal} />
-            ))}
-          </div>
+          <SortableGoalList
+            goals={dashboard.activeGoals}
+            selectedId={selectedId}
+            onSelect={select}
+            onOpenDetail={(id) => setDetailGoalId(id)}
+            onUpdate={handleUpdate}
+          />
         )}
       </div>
 
@@ -101,6 +146,14 @@ export default function DashboardPage() {
             })}
           </div>
         </div>
+      )}
+
+      {/* Goal Detail Modal */}
+      {detailGoalId && (
+        <GoalDetailModal
+          goalId={detailGoalId}
+          onClose={() => setDetailGoalId(null)}
+        />
       )}
     </div>
   );

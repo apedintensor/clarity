@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useCallback } from "react";
+import { toast } from "sonner";
 import { trpc } from "@/lib/trpc";
 import { Timer } from "./timer";
 import { Celebration } from "./celebration";
@@ -30,6 +31,22 @@ export function FocusView({ goalId, task, position, totalTasks, goalProgress }: 
       });
       setCelebrating(true);
     },
+  });
+
+  const softDelete = trpc.task.softDelete.useMutation({
+    onSuccess: (result) => {
+      utils.task.getNext.invalidate({ goalId });
+      toast("Task deleted", {
+        action: {
+          label: "Undo",
+          onClick: () => undoDelete.mutate({ taskId: result.id }),
+        },
+        duration: 5000,
+      });
+    },
+  });
+  const undoDelete = trpc.task.undoDelete.useMutation({
+    onSuccess: () => utils.task.getNext.invalidate({ goalId }),
   });
 
   const handleCelebrationComplete = useCallback(() => {
@@ -70,14 +87,23 @@ export function FocusView({ goalId, task, position, totalTasks, goalProgress }: 
           </div>
         </div>
 
-        {/* Complete button */}
-        <button
-          onClick={() => completeTask.mutate({ id: task.id })}
-          disabled={completeTask.isPending}
-          className="w-full rounded-xl bg-[var(--success)] py-4 text-lg font-bold text-white hover:opacity-90 disabled:opacity-50"
-        >
-          {completeTask.isPending ? "Completing..." : "Mark Complete"}
-        </button>
+        {/* Action buttons */}
+        <div className="space-y-2">
+          <button
+            onClick={() => completeTask.mutate({ id: task.id })}
+            disabled={completeTask.isPending}
+            className="w-full rounded-xl bg-[var(--success)] py-4 text-lg font-bold text-white hover:opacity-90 disabled:opacity-50"
+          >
+            {completeTask.isPending ? "Completing..." : "Mark Complete"}
+          </button>
+          <button
+            onClick={() => softDelete.mutate({ taskId: task.id })}
+            disabled={softDelete.isPending}
+            className="w-full rounded-xl border border-[var(--border)] py-3 text-sm text-[var(--muted)] hover:text-red-500 hover:border-red-500"
+          >
+            {softDelete.isPending ? "Deleting..." : "Delete Task"}
+          </button>
+        </div>
       </div>
     </div>
   );
