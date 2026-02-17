@@ -39,4 +39,9 @@ TypeScript 5.6+ (strict mode): Follow standard conventions
 
 
 <!-- MANUAL ADDITIONS START -->
+## OpenClaw Integration Recommendation
+
+- Integrate Clarity into OpenClaw as a **Skill** first.
+- Use Skill mode for read-oriented capabilities (e.g., surfacing goals/tasks and invoking existing CLI/tRPC flows).
+- Add a dedicated OpenClaw **Plugin** only if bi-directional sync or long-running background orchestration is required.
 <!-- MANUAL ADDITIONS END -->
